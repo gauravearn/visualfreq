@@ -1,2 +1,9 @@
 # visualfreq
-estimating the alignment distances and the alignment visualization from the sequence alignment. use sapply to map across all the files and generate the alignments and the phylogeny and also the dna distance measures
+estimating the alignment distances and the alignment visualization from the sequence alignment. use sapply to map across all the files and generate the alignments and the phylogeny and also the dna distance measures. 
+
+Gaurav Sablok \
+Academic Staff Member \
+Bioinformatics \
+Institute for Biochemistry and Biology \
+University of Potsdam \
+Potsdam,Germany
