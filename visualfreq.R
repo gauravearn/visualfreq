@@ -28,4 +28,11 @@ suppressPackageStartupMessages(library(reticulate, pos = "package:base"))
   ggmsa(nogapsfasta, alignmentstart, alignmentend,  color = "Shapely_NT", font = "DroidSansMono", 
       char_width = 0.5,seq_name = TRUE) + geom_seqlogo(color = "Shapely_NT") +geom_msaBar()
   ggsave("alignment_plot.pdf")
+  alignment <- DNAMultipleAlignment(msaMuscle(readDNAStringSet(file = inputfile)))
+      alignmentwrite <- msaConvert(alignment, type = "ape::DNAbin")
+      write.FASTA(alignmentwrite, file = "alignmentphylogeny.fasta")
+      fasta <- paste(getwd(),"alignmentphylogeny.fasta", sep = "/")
+      likelihood <- TreeLine(myXStringSet = readDNAStringSet(file = fasta), 
+                             showPlot = TRUE, reconstruct = TRUE)
+      WriteDendrogram(likelihood, file = "maximum_likelihood.txt")
 }
