@@ -21,7 +21,7 @@ suppressPackageStartupMessages(library(reticulate, pos = "package:base"))
   alignment <- DNAMultipleAlignment(msaMuscle(readDNAStringSet(file = inputfile)))
   alignmentwrite <- msaConvert(alignment, type = "ape::DNAbin")
   write.FASTA(alignmentwrite, file = "alignment.fasta")
-  fasta <- "/home/gaurav/Desktop/arabidopsis/alignment.fasta"
+  fasta <- paste(getwd(),"alignment.fasta", sep = "/")
   ggmsa(fasta, alignmentstart, alignmentend, color="Chemistry_AA")
   complete_likelihood <- TreeLine(myXStringSet = 
              readDNAStringSet(file = "alignment.fasta"),myDistMatrix = 
