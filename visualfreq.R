@@ -25,10 +25,8 @@ suppressPackageStartupMessages(library(reticulate, pos = "package:base"))
   readfastanogaps <- RemoveGaps(readDNAStringSet(file = fasta))
   write.dna(readfastanogaps, "alignmentnogaps.fasta", format = "fasta")
   nogapsfasta <- paste(getwd(),"alignmentnogaps.fasta", sep = "/")
-  ggmsainput <- readDNAStringSet(nogapsfasta)
-  ggmsa(ggmsainput, alignmentstart, alignmentend,  color = "Shapely_NT", font = "DroidSansMono", 
-                           char_width = 0.5,seq_name = TRUE) + geom_seqlogo(color = "Shapely_NT") 
-                                                                    +geom_msaBar() + geom_GC()
+  ggmsa(nogapsfasta, alignmentstart, alignmentend,  color = "Shapely_NT", font = "DroidSansMono", 
+      char_width = 0.5,seq_name = TRUE) + geom_seqlogo(color = "Shapely_NT") +geom_msaBar()
   ggsave("alignment_plot.pdf")
   sink(file = outputmatrixfilename)
   dist.dna(read.FASTA(file = nogapsfasta, type = "DNA"))
