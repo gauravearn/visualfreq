@@ -28,7 +28,4 @@ suppressPackageStartupMessages(library(reticulate, pos = "package:base"))
   ggmsa(nogapsfasta, alignmentstart, alignmentend,  color = "Shapely_NT", font = "DroidSansMono", 
       char_width = 0.5,seq_name = TRUE) + geom_seqlogo(color = "Shapely_NT") +geom_msaBar()
   ggsave("alignment_plot.pdf")
-  sink(file = outputmatrixfilename)
-  dist.dna(read.FASTA(file = nogapsfasta, type = "DNA"))
-  sink()
 }
