@@ -4,7 +4,7 @@
 # Date 2024-3-21
 # a gene alignment to the visual alignment priting 
 # for the creation of the alignment maps
-visualfreq <- function(inputfile, alignmentstart, alignmentend){
+visualfreq <- function(inputfile, alignmentstart, alignmentend, outputmatrixfilename){
 suppressPackageStartupMessages(library(argparser, pos = "package:base"))
 suppressPackageStartupMessages(library(methods, pos = "package:base"))
 suppressPackageStartupMessages(library(Biostrings, pos = "package:base"))
@@ -22,19 +22,15 @@ suppressPackageStartupMessages(library(reticulate, pos = "package:base"))
   alignmentwrite <- msaConvert(alignment, type = "ape::DNAbin")
   write.FASTA(alignmentwrite, file = "alignment.fasta")
   fasta <- paste(getwd(),"alignment.fasta", sep = "/")
-  ggmsa(fasta, alignmentstart, alignmentend, color="Chemistry_AA")
-  complete_likelihood <- TreeLine(myXStringSet = 
-             readDNAStringSet(file = "alignment.fasta"),myDistMatrix = 
-                        DistanceMatrix(RemoveGaps(StaggerAlignment(AlignSeqs(readDNAStringSet(file = "alignment.fasta"))), 
-                           removeGaps = "all", processors = 3), type = "dist"), 
-       method = "complete", cutoff = 0.05, showPlot = TRUE, reconstruct = TRUE)
-  WriteDendrogram(complete_likelihood, file = "maximum_likelihood.txt")
-  ggmsa(DNAMultipleAlignment(msaMuscle(readDNAStringSet(file = "alignment.fasta"))), 
- color = "Shapely_NT", font = "DroidSansMono", 
- char_width = 0.5,seq_name = TRUE + geom_seqlogo(color = "Shapely_NT")) 
-  +geom_msaBar() + geom_GC()
+  readfastanogaps <- RemoveGaps(readDNAStringSet(file = fasta))
+  write.dna(readfastanogaps, "alignmentnogaps.fasta", format = "fasta")
+  nogapsfasta <- paste(getwd(),"alignmentnogaps.fasta", sep = "/")
+  ggmsainput <- readDNAStringSet(nogapsfasta)
+  ggmsa(ggmsainput, alignmentstart, alignmentend,  color = "Shapely_NT", font = "DroidSansMono", 
+                           char_width = 0.5,seq_name = TRUE) + geom_seqlogo(color = "Shapely_NT") 
+                                                                    +geom_msaBar() + geom_GC()
   ggsave("alignment_plot.pdf")
-  sink(file = "distance_matrix_arabiopsis.txt")
-  dist.dna(read.FASTA(file = "alignment.fasta", type = "DNA"))
+  sink(file = outputmatrixfilename)
+  dist.dna(read.FASTA(file = nogapsfasta, type = "DNA"))
   sink()
 }
