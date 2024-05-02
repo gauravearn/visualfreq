@@ -8,7 +8,7 @@
 visualfreq("sampleexample.fasta", 10, 100)
 ```
 
-Gaurav Sablok \
+Gaurav \
 Academic Staff Member \
 Bioinformatics \
 Institute for Biochemistry and Biology \
